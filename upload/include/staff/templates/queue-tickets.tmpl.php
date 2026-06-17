@@ -146,6 +146,7 @@ return false;">
         <input type="hidden" name="a" value="search">
         <input type="hidden" name="search-type" value="" />
         <div class="attached input">
+
             <input type="text" class="basic-search" data-url="ajax.php/tickets/lookup" name="query"
                 autofocus size="30" value="<?php echo Format::htmlchars($_REQUEST['query'] ?? null, true); ?>"
                 autocomplete="off" autocorrect="off" autocapitalize="off">
@@ -228,7 +229,7 @@ return false;">
     <input type="hidden" name="a" value="mass_process">
     <input type="hidden" name="do" id="action" value="">
 
-    <table class="list queue tickets" border="0" cellspacing="1" cellpadding="2" width="940">
+    <table id="responsive-table" class="list queue tickets" border="0" cellspacing="1" cellpadding="2">
         <thead>
             <tr>
                 <?php
@@ -252,7 +253,11 @@ return false;">
                             $heading
                         );
                     }
+                    // var_dump($heading);
+                    // exit;
                     echo sprintf(
+
+
                         '<th width="%s" data-id="%d">%s</th>',
                         $C->getWidth(),
                         $C->id,
@@ -266,23 +271,37 @@ return false;">
             <?php
             foreach ($tickets as $T) {
                 echo '<tr>';
+
                 if ($canManageTickets) { ?>
-                    <td><input type="checkbox" class="ckb" name="tids[]"
-                            value="<?php echo $T['ticket_id']; ?>" /></td>
+                    <td>
+                        <input type="checkbox" class="ckb" name="tids[]"
+                            value="<?php echo $T['ticket_id']; ?>" />
+                    </td>
             <?php
                 }
+
                 foreach ($columns as $C) {
                     list($contents, $styles) = $C->render($T);
-                    if ($style = $styles ? 'style="' . $styles . '"' : '') {
-                        echo "<td $style><div $style>$contents</div></td>";
+
+                    $heading = Format::htmlchars($C->getLocalHeading());
+                    $heading = strip_tags($heading);
+
+                    $style = $styles ? 'style="' . $styles . '"' : '';
+
+                    if ($style) {
+                        echo "<td $style data-label=\"$heading\">
+                    <div $style>$contents</div>
+                  </td>";
                     } else {
-                        echo "<td>$contents</td>";
+                        echo "<td data-label=\"$heading\">$contents</td>";
                     }
                 }
+
                 echo '</tr>';
             }
             ?>
         </tbody>
+
         <tfoot>
             <tr>
                 <td colspan="<?php echo count($columns) + 1; ?>">

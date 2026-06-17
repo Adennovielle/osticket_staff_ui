@@ -68,7 +68,9 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
 
         </head>
 
+
         <body id="staff-body" class="min-vh-100">
+
             <div id="staff-container" class="">
                 <?php
                 if ($ost->getError())
@@ -96,6 +98,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                     </a>
 
                 </div>
+
                 <div id="pjax-container" class=" <?php if ($_POST) echo 'no-pjax'; ?>">
                     <?php } else {
                     header('X-PJAX-Version: ' . GIT_VERSION);
@@ -112,13 +115,13 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                                                                                                                                                 } # endif X_PJAX 
                                                                                                                                                     ?>
                 <ul id="nav" class=" position-fixed  
-                    start-0   text-white p-3 " style=" width: 250px; top: 90px;">
+                        start-0   text-white p-3 " style=" width: 250px; top: 90px;">
                     <?php include STAFFINC_DIR . "templates/navigation.tmpl.php"; ?>
                 </ul>
 
                 <?php include STAFFINC_DIR . "templates/sub-navigation.tmpl.php"; ?>
 
-                <div id=" content">
+                <div id="content">
                     <?php if (isset($errors['err'])) { ?>
                         <div id="msg_error"><?php echo $errors['err']; ?></div>
                     <?php } elseif ($msg) { ?>
@@ -133,14 +136,59 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                 </div>
 
                 <script>
-                    const toggle = document.getElementById("menuToggle");
-                    const nav = document.getElementById("nav");
-                    const body = document.getElementsByTagName("body")[0];
+                    // document.addEventListener("DOMContentLoaded", function() {
+                    //     const toggle = document.getElementById("menuToggle");
+                    //     const nav = document.getElementById("nav");
+                    //     const body = document.getElementsByTagName("body")[0];
+                    //     toggle.addEventListener("click", () => {
+                    //         nav.classList.toggle("closed");
+                    //         body.classList.toggle("nav-open");
+                    //     });
+                    // });
 
-                    toggle.addEventListener("click", () => {
-                        nav.classList.toggle("closed");
-                        body.classList.toggle("nav-open");
+                    // function initMenuToggle() {
+                    //     const toggle = document.getElementById("menuToggle");
+                    //     const nav = document.getElementById("nav");
+                    //     const body = document.body;
+
+                    //     if (toggle) {
+                    //         toggle.addEventListener("click", () => {
+                    //             nav.classList.toggle("closed");
+                    //             body.classList.toggle("nav-open");
+                    //         });
+                    //     }
+                    // }
+
+                    // Initial load
+                    // document.addEventListener("DOMContentLoaded", initMenuToggle);
+
+                    // Re-run after PJAX load (osTicket uses this)
+                    // document.addEventListener("pjax:end", initMenuToggle);
+
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        document.addEventListener("click", function(e) {
+                            const toggle = e.target.closest("#menuToggle");
+                            if (!toggle) return;
+
+                            const nav = document.getElementById("nav");
+                            const body = document.body;
+
+                            if (nav) nav.classList.toggle("closed");
+                            body.classList.toggle("nav-open");
+                        });
                     });
+
+                    // document.addEventListener("click", function(e) {
+                    //     const toggle = e.target.closest("#menuToggle");
+                    //     if (!toggle) return;
+
+                    //     const nav = document.getElementById("nav");
+                    //     const body = document.body;
+
+                    //     if (nav) nav.classList.toggle("closed");
+                    //     body.classList.toggle("nav-open");
+                    // });
                 </script>
         </body>
 
