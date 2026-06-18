@@ -70,7 +70,6 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
 
 
         <body id="staff-body" class="min-vh-100">
-
             <div id="staff-container" class="">
                 <?php
                 if ($ost->getError())
@@ -82,6 +81,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                 ?>
                 <div id="header" class="fixed-top z-100 ">
                     <div id="menuToggle"></div>
+                    <div id="user-icon"></div>
                     <p id="info" class="pull-right no-pjax"><?php echo sprintf(__('Welcome, %s.'), '<strong>' . $thisstaff->getFirstName() . '</strong>'); ?>
                         <?php
                         if ($thisstaff->isAdmin() && !defined('ADMINPAGE')) { ?>
@@ -96,7 +96,6 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                         <span class="valign-helper"></span>
                         <img src="<?php echo ROOT_PATH ?>scp/logo.php?<?php echo strtotime($cfg->lastModified('staff_logo_id')); ?>" alt="osTicket &mdash; <?php echo __('Customer Support System'); ?>" />
                     </a>
-
                 </div>
 
                 <div id="pjax-container" class=" <?php if ($_POST) echo 'no-pjax'; ?>">
@@ -165,30 +164,35 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                     // Re-run after PJAX load (osTicket uses this)
                     // document.addEventListener("pjax:end", initMenuToggle);
 
+                    const nav = document.getElementById("nav");
+                    const body = document.body;
 
                     document.addEventListener("DOMContentLoaded", function() {
                         document.addEventListener("click", function(e) {
                             const toggle = e.target.closest("#menuToggle");
-                            if (!toggle) return;
-
                             const nav = document.getElementById("nav");
                             const body = document.body;
-
+                            if (!toggle) return;
                             if (nav) nav.classList.toggle("closed");
                             body.classList.toggle("nav-open");
                         });
                     });
 
-                    // document.addEventListener("click", function(e) {
-                    //     const toggle = e.target.closest("#menuToggle");
-                    //     if (!toggle) return;
+                    function checkWidth() {
+                        if (window.innerWidth <= 1200) {
+                            nav.classList.add("closed");
+                            body.classList.add("nav-open");
 
-                    //     const nav = document.getElementById("nav");
-                    //     const body = document.body;
+                        } else {
+                            nav.classList.remove("closed");
+                            body.classList.remove("nav-open");
+                        }
+                    }
+                    // run on load
+                    checkWidth();
+                    window.addEventListener("resize", checkWidth);
 
-                    //     if (nav) nav.classList.toggle("closed");
-                    //     body.classList.toggle("nav-open");
-                    // });
+                    // run when resizing
                 </script>
         </body>
 
