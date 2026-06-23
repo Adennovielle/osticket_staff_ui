@@ -113,7 +113,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                     <title><?php echo ($ost && ($title = $ost->getPageTitle())) ? $title : 'osTicket :: ' . __('Staff Control Panel'); ?></title><?php
                                                                                                                                                 } # endif X_PJAX 
                                                                                                                                                     ?>
-                <ul id="nav" class=" position-fixed  
+                <ul id="nav" class="position-fixed  
                         start-0   text-white p-3 " style=" width: 250px; top: 90px;">
                     <?php include STAFFINC_DIR . "templates/navigation.tmpl.php"; ?>
                 </ul>
@@ -136,63 +136,123 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
 
                 <script>
                     // document.addEventListener("DOMContentLoaded", function() {
-                    //     const toggle = document.getElementById("menuToggle");
-                    //     const nav = document.getElementById("nav");
-                    //     const body = document.getElementsByTagName("body")[0];
-                    //     toggle.addEventListener("click", () => {
-                    //         nav.classList.toggle("closed");
+                    //     document.addEventListener("click", function(e) {
+                    //         const toggle = e.target.closest("#menuToggle");
+                    //         const nav = document.getElementById("nav");
+                    //         const body = document.body;
+
+                    //         if (!toggle)
+                    //             return;
+                    //         if (nav) nav.classList.toggle("closed");
                     //         body.classList.toggle("nav-open");
                     //     });
                     // });
 
-                    // function initMenuToggle() {
-                    //     const toggle = document.getElementById("menuToggle");
+                    document.addEventListener("DOMContentLoaded", function() {
+
+                        const body = document.body;
+
+                        // CLICK
+                        document.addEventListener("click", function(e) {
+                            const toggle = e.target.closest("#menuToggle");
+                            if (!toggle) return;
+
+                            const nav = document.getElementById("nav");
+
+                            if (!nav) return;
+
+                            nav.classList.toggle("closed");
+                            if (window.innerWidth <= 1100) {
+                                body.classList.add("nav-open");
+                            } else {
+                                body.classList.toggle("nav-open");
+
+                            }
+                        });
+
+                        // ✅
+                        // ONE unified resize logic
+
+                        function handleResponsiveSidebar() {
+                            const nav = document.getElementById("nav");
+                            if (!nav) return;
+
+                            const width = window.innerWidth;
+
+                            // 🔹 MOBILE
+                            if (width <= 1100) {
+                                body.classList.add("nav-open");
+                                // wag galawin nav state (user controlled)
+                            }
+
+                            // 🔹 TABLET / SMALL DESKTOP
+                            else if (width <= 1200) {
+                                nav.classList.add("closed");
+                                body.classList.add("nav-open");
+                            }
+
+                            // 🔹 LARGE DESKTOP
+                            else {
+                                nav.classList.remove("closed");
+                                body.classList.remove("nav-open");
+                            }
+                        }
+
+                        // run once
+                        handleResponsiveSidebar();
+
+                        // listen once
+                        window.addEventListener("resize", handleResponsiveSidebar);
+
+
+
+
+
+                        function toggleUserInfoNav() {
+                            const userIcon = document.getElementById("user-icon");
+                            if (window.innerWidth <= 760) {
+                                userIcon.classList.add("show");
+
+                            } else {
+                                userIcon.classList.remove("show");
+                            }
+                        }
+                        // run on load
+                        toggleUserInfoNav();
+                        window.addEventListener("resize", toggleUserInfoNav);
+                        // run when resizing
+
+                        function userIconToggle() {
+                            const userInfoNav = document.getElementById("info");
+                            const userIcon = document.getElementById("user-icon");
+
+                            userIcon.addEventListener("click", function() {
+                                userInfoNav.classList.toggle("show");
+                                userInfoNav.style.pointerEvents = "unset";
+                            })
+                        }
+                        // run on load
+                        userIconToggle();
+
+                    });
+
+
+                    // function checkWidth() {
                     //     const nav = document.getElementById("nav");
                     //     const body = document.body;
 
-                    //     if (toggle) {
-                    //         toggle.addEventListener("click", () => {
-                    //             nav.classList.toggle("closed");
-                    //             body.classList.toggle("nav-open");
-                    //         });
+                    //     if (window.innerWidth <= 1200) {
+                    //         nav.classList.add("closed");
+                    //         body.classList.add("nav-open");
+
+                    //     } else {
+                    //         nav.classList.remove("closed");
+                    //         body.classList.remove("nav-open");
                     //     }
                     // }
-
-                    // Initial load
-                    // document.addEventListener("DOMContentLoaded", initMenuToggle);
-
-                    // Re-run after PJAX load (osTicket uses this)
-                    // document.addEventListener("pjax:end", initMenuToggle);
-
-                    const nav = document.getElementById("nav");
-                    const body = document.body;
-
-                    document.addEventListener("DOMContentLoaded", function() {
-                        document.addEventListener("click", function(e) {
-                            const toggle = e.target.closest("#menuToggle");
-                            const nav = document.getElementById("nav");
-                            const body = document.body;
-                            if (!toggle) return;
-                            if (nav) nav.classList.toggle("closed");
-                            body.classList.toggle("nav-open");
-                        });
-                    });
-
-                    function checkWidth() {
-                        if (window.innerWidth <= 1200) {
-                            nav.classList.add("closed");
-                            body.classList.add("nav-open");
-
-                        } else {
-                            nav.classList.remove("closed");
-                            body.classList.remove("nav-open");
-                        }
-                    }
-                    // run on load
-                    checkWidth();
-                    window.addEventListener("resize", checkWidth);
-
-                    // run when resizing
+                    // // run on load
+                    // checkWidth();
+                    // window.addEventListener("resize", checkWidth);
                 </script>
         </body>
 

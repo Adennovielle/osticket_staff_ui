@@ -7,6 +7,8 @@
   --dark-body-color: rgb(237, 245, 244);
   --success: rgb(25, 135, 84);
   --hover-success: rgb(21, 107, 67);
+  --user-info-bg-color: rgb(48, 109, 41); 
+  --fade-black: rgba(0, 0, 0, 0.366);
 }
 
 * {
@@ -286,15 +288,14 @@ a time {
   text-align: center;
 }
 
-#nav,
 #sub_nav {
   clear: both;
   margin: 0;
   padding: 0 20px;
-  height: 26px;
+  /* height: 26px; */
   line-height: 26px;
-  border-left: 1px solid #aaa;
-  border-right: 1px solid #aaa;
+  /* border: 4px solid green !important; */
+  
   white-space: nowrap;
 }
 #sub_nav {
@@ -316,7 +317,7 @@ a time {
   /* border-top: 1px solid #ddd; */
   /* border-bottom: 1px solid #c5d9ec; */
   /* border: 4px solid red !important; */
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: start;
   /* padding-top: 90px !important; */
@@ -1003,6 +1004,7 @@ body.nav-open {
   border-bottom: 1px solid #bebebe;
   border-left: 1px solid #bebebe;
   background-color: #eee;
+  /* display: none; */
 }
 
 .jb-overflowmenu .jb-overflowmenu-menu-secondary-handle {
@@ -2677,12 +2679,13 @@ time.faq {
   background: #f8f8f8;
   border: 2px solid #2a67ac;
   display: none;
-  z-index: 10;
+  z-index: 2000;
   box-shadow: 0 5px 60px #001;
   border-radius: 5px;
   max-height: 72%;
   min-height: 50px;
   overflow-y: auto;
+
 }
 .dialog .table td:not(:empty) {
   background-color: #f8f8f8 !important;
@@ -4444,7 +4447,7 @@ th {
 
 #sub_nav {
   background: #f7f7f7;
-  /* border: 4px solid red !important; */
+  border: 4px solid red !important;
   padding: 0 !important;
   padding-top: 15px !important;
   display: flex;
@@ -4670,30 +4673,61 @@ tbody{
   }
 }
 
-@media (max-width: 760px) {
-#info {
-  border: 3px solid black !important;
-  display: flex !important;
-  flex-direction: column !important;
- 
-}
 
-}
 #header #user-icon{
   background-image: url("../../images/user.png") !important;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   /* border: 3px solid red !important; */
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   position: absolute;
-  top: 20%;
+  top: 28%;
   right: 5%;
   cursor: pointer;
+display: none;
 
 }
-#header #user-icon:hover{
-filter: brightness(0.6)  
+#header #user-icon.show{
+  display: inline-block;
 }
+#header #user-icon:hover{
+filter: brightness(0.6);
+}
+#info.show {
+  opacity: 1;
+  /* pointer-events: none; */
+
+}
+@media (max-width: 760px) {
+#info {
+  /* border: 3px solid black !important; */
+  box-shadow: 2px 2px 10px var(--fade-black);
+  display: flex !important;
+  flex-direction: column !important;
+  position: fixed;
+  right: 0px;
+  top: 50px;
+  opacity: 0;
+  pointer-events: none;
+  /* background-color: var(--user-info-bg-color)!important; */
+}
+}
+@media (max-width: 700px) {
+.jb-overflowmenu {
+  /* border: 4px solid greenyellow !important;  */
+}
+
+.jb-overflowmenu .jb-overflowmenu-container {
+ border: 3px solid orange;
+ width: 50px;
+}
+.jb-overflowmenu .jb-overflowmenu-menu-secondary-handle {
+   border: 3px solid pink;
+width: 100% !important;
+height: 100%;
+}
+}
+
 /*END OF CUSTOMIZE CSS ADOLF */
