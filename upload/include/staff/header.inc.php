@@ -155,12 +155,12 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                         // CLICK
                         document.addEventListener("click", function(e) {
                             const toggle = e.target.closest("#menuToggle");
-                            if (!toggle) return;
-
                             const nav = document.getElementById("nav");
 
-                            if (!nav) return;
+                            if (!toggle) return;
 
+
+                            if (!nav) return;
                             nav.classList.toggle("closed");
                             if (window.innerWidth <= 1100) {
                                 body.classList.add("nav-open");
@@ -204,10 +204,6 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                         // listen once
                         window.addEventListener("resize", handleResponsiveSidebar);
 
-
-
-
-
                         function toggleUserInfoNav() {
                             const userIcon = document.getElementById("user-icon");
                             if (window.innerWidth <= 760) {
@@ -237,22 +233,22 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                     });
 
 
-                    // function checkWidth() {
-                    //     const nav = document.getElementById("nav");
-                    //     const body = document.body;
+                    function checkWidth() {
+                        const nav = document.getElementById("nav");
+                        const body = document.body;
 
-                    //     if (window.innerWidth <= 1200) {
-                    //         nav.classList.add("closed");
-                    //         body.classList.add("nav-open");
+                        if (window.innerWidth <= 1200) {
+                            nav.classList.add("closed");
+                            body.classList.add("nav-open");
 
-                    //     } else {
-                    //         nav.classList.remove("closed");
-                    //         body.classList.remove("nav-open");
-                    //     }
-                    // }
-                    // // run on load
-                    // checkWidth();
-                    // window.addEventListener("resize", checkWidth);
+                        } else {
+                            nav.classList.remove("closed");
+                            body.classList.remove("nav-open");
+                        }
+                    }
+                    // run on load
+                    checkWidth();
+                    window.addEventListener("resize", checkWidth);
                 </script>
         </body>
 
