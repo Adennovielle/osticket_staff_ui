@@ -199,21 +199,20 @@ $users->order_by($order . $order_column);
                     <td nowrap align="center">
                         <input type="checkbox" value="<?php echo $U['id']; ?>" class="ckb mass nowarn" />
                     </td>
-                    <td>&nbsp;
+                    <td data-label="Name">&nbsp;
                         <a class="preview"
                             href="users.php?id=<?php echo $U['id']; ?>"
-                            data-preview="#users/<?php echo $U['id']; ?>/preview"><?php
-                                                                                    echo Format::htmlchars($name); ?></a>
-                        &nbsp;
+                            data-preview="#users/<?php echo $U['id']; ?>/preview"> <?php echo Format::htmlchars($name); ?> </a>
+                        <span> &nbsp; </span>
                         <?php
                         if ($U['ticket_count'])
                             echo sprintf('<i class="icon-fixed-width icon-file-text-alt"></i>
                              <small>(%d)</small>', $U['ticket_count']);
                         ?>
                     </td>
-                    <td><?php echo $status; ?></td>
-                    <td><?php echo Format::date($U['created']); ?></td>
-                    <td><?php echo Format::datetime($U['updated']); ?>&nbsp;</td>
+                    <td data-label="Status"><?php echo $status; ?></td>
+                    <td data-label="Created"><?php echo Format::date($U['created']); ?></td>
+                    <td data-label="Updated"><?php echo Format::datetime($U['updated']); ?>&nbsp;</td>
                 </tr>
             <?php   } //end of foreach. 
             ?>

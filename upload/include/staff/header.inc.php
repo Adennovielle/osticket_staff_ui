@@ -206,7 +206,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
 
                         function toggleUserInfoNav() {
                             const userIcon = document.getElementById("user-icon");
-                            if (window.innerWidth <= 760) {
+                            if (window.innerWidth <= 820) {
                                 userIcon.classList.add("show");
 
                             } else {
