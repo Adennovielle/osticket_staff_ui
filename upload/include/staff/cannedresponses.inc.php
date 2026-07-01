@@ -133,13 +133,13 @@ else
                             <input type="checkbox" name="ids[]" value="<?php echo $row['canned_id']; ?>" class="ckb"
                                 <?php echo $sel ? 'checked="checked"' : ''; ?> />
                         </td>
-                        <td>
+                        <td data-label="Title">
                             <a href="canned.php?id=<?php echo $row['canned_id']; ?>"><?php echo Format::truncate($row['title'], 200);
                                                                                         echo "&nbsp;$files"; ?></a><span>&nbsp;</span>
                         </td>
-                        <td><?php echo $row['isenabled'] ? __('Active') : '<b>' . __('Disabled') . '</b>'; ?></td>
-                        <td><?php echo $row['department'] ? $row['department'] : '&mdash; ' . __('All Departments') . ' &mdash;'; ?></td>
-                        <td><span> &nbsp; </span> <?php echo Format::datetime($row['updated']); ?></td>
+                        <td data-label="Status"><?php echo $row['isenabled'] ? __('Active') : '<b>' . __('Disabled') . '</b>'; ?></td>
+                        <td data-label="Department"><?php echo $row['department'] ? $row['department'] : '&mdash; ' . __('All Departments') . ' &mdash;'; ?></td>
+                        <td data-label="Last Updated"><span> &nbsp; </span> <?php echo Format::datetime($row['updated']); ?></td>
                     </tr>
             <?php
                 } //end of while.

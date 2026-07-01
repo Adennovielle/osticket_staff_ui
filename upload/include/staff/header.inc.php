@@ -157,17 +157,33 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                             const toggle = e.target.closest("#menuToggle");
                             const nav = document.getElementById("nav");
 
-                            if (!toggle) return;
 
-
-                            if (!nav) return;
-                            nav.classList.toggle("closed");
-                            if (window.innerWidth <= 1100) {
-                                body.classList.add("nav-open");
-                            } else {
-                                body.classList.toggle("nav-open");
-
+                            const userInfoNav = document.getElementById("info");
+                            const userIcon = document.getElementById("user-icon");
+                            if (
+                                !e.target.closest("#user-icon") &&
+                                !e.target.closest("#info")
+                            ) {
+                                userInfoNav.classList.remove("show");
                             }
+                            if (!toggle) {
+
+                                // nav.classList.add("closed");
+                                // body.classList.add("nav-open");
+                                return;
+                            } else {
+                                if (!nav) return;
+                                nav.classList.toggle("closed");
+                                if (window.innerWidth <= 1100) {
+                                    body.classList.add("nav-open");
+                                } else {
+                                    body.classList.toggle("nav-open");
+
+                                }
+                            }
+
+
+
                         });
 
                         // ✅
@@ -206,6 +222,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
 
                         function toggleUserInfoNav() {
                             const userIcon = document.getElementById("user-icon");
+
                             if (window.innerWidth <= 820) {
                                 userIcon.classList.add("show");
 
@@ -231,7 +248,6 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
                         userIconToggle();
 
                     });
-
 
                     function checkWidth() {
                         const nav = document.getElementById("nav");
